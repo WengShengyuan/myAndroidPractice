@@ -11,7 +11,7 @@ import java.io.File;
 public class DbUtils {
 
     private volatile static DbUtils instance;
-
+// etsetgit
     public static DbUtils getInstance() {
         if (instance == null) {
             synchronized (DbUtils.class) {

@@ -1,9 +1,13 @@
 package com.example.administrator.myapplication;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -32,7 +36,7 @@ public class SecActivity extends Activity {
     private EditText etInsert;
 
     private Context context;
-
+    private int positionToDelete=-1;
     private List<String> strs = new ArrayList<String>();
 
     @Override
@@ -42,6 +46,42 @@ public class SecActivity extends Activity {
         x.view().inject(this);
         context = this;
         initList();
+
+        lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                positionToDelete = position;
+                AlertDialog dialog = new AlertDialog.Builder(context).setMessage("确定删除吗？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                delete(positionToDelete);
+                                Toast.makeText(context, "已删除", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(context, "已取消", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+
+                        .create();
+                dialog.show();
+            }
+        });
+    }
+
+    private void delete(int position){
+        Toast.makeText(context, "deleting item:"+position, Toast.LENGTH_SHORT).show();
+        String v = strs.get(position);
+        strs.remove(position);
+        refreshList();
+        try {
+            DbUtils.getInstance().getDb().execNonQuery("DELETE from list_item where value = '"+v+"'");
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 
     @Event(value = R.id.btnInsert, type = View.OnClickListener.class)

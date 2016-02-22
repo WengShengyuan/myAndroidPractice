@@ -103,8 +103,10 @@ public class MainActivity extends AppCompatActivity {
     @Event(value = R.id.btnLoadPic,
         type = View.OnClickListener.class)
     private void btnLoadPicClicked(View view){
-        String url= "http://192.168.10.2/shop/resources/uploadfiles/images/1445308242413.jpg";
+//        String url= "http://192.168.10.2/shop/resources/uploadfiles/images/1445308242413.jpg";
+        String url = "http://img3.imgtn.bdimg.com/it/u=3651984164,2137314275&fm=15&gp=0.jpg";
         x.image().bind(ivImg1, url);
+
     }
 
     @Event(value = R.id.ivImg1,

@@ -14,7 +14,7 @@ public class ListItem {
     @Column(name = "id", isId = true)
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "value")
     private String value;
 
     public int getId() {

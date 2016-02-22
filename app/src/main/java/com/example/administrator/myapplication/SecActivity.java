@@ -41,7 +41,7 @@ public class SecActivity extends Activity {
         setContentView(R.layout.activity_secactivity);
         x.view().inject(this);
         context = this;
-        refreshList();
+        initList();
     }
 
     @Event(value = R.id.btnInsert, type = View.OnClickListener.class)
@@ -58,8 +58,13 @@ public class SecActivity extends Activity {
 
     @Event(value = R.id.btnClearList, type = View.OnClickListener.class)
     private void clearList(View view){
-        this.strs=new ArrayList<String>();
-        refreshList();
+        try {
+            DbUtils.getInstance().getDb().execNonQuery("DELETE FROM list_item where 1=1");
+            strs = new ArrayList<String>();
+            refreshList();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 
     @Event(value = R.id.btnPersist, type = View.OnClickListener.class)
@@ -70,10 +75,11 @@ public class SecActivity extends Activity {
             a.setValue(s);
             try {
                 DbUtils.getInstance().getDb().save(a);
-            } catch (DbException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        Toast.makeText(context, "保存成功",Toast.LENGTH_SHORT).show();
     }
 
     private void initList(){

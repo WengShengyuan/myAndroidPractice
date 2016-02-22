@@ -3,6 +3,7 @@ package database;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
 
+import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 /**
@@ -10,9 +11,10 @@ import org.xutils.db.annotation.Table;
  */
 @Table(name = "list_item")
 public class ListItem {
-
+    @Column(name = "id", isId = true)
     private int id;
 
+    @Column(name = "name")
     private String value;
 
     public int getId() {

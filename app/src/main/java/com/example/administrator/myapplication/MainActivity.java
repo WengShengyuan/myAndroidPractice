@@ -1,6 +1,7 @@
 package com.example.administrator.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
     private void btnResetClicked(View view){
         LogUtil.i("btnReset clicked");
         etUserName.setText("");
+        tvResult.setText("");
     }
 
     @Event(value = R.id.btnLoadPic,
@@ -119,10 +120,11 @@ public class MainActivity extends AppCompatActivity {
         LogUtil.i("btnLoad Clicked");
         LogUtil.i("Url:"+url);
         RequestParams params = new RequestParams(url);
-        x.http().get(params, new Callback.CommonCallback<String>(){
+        x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
+//                Toast.makeText(x.app(), result, Toast.LENGTH_LONG).show();
+                tvResult.setText(result.toString());
             }
 
             @Override
@@ -142,6 +144,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Event(value = R.id.btnOpenSecActivity, type = View.OnClickListener.class)
+    private void btnOpenSecActivity(View view){
+        try {
+            LogUtil.i("startting new activity");
+            startActivity(new Intent(this, SecActivity.class));
+        } catch (Exception e) {
+            Toast.makeText(context, "Err:"+e, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Event(value = R.id.btnOpenThirActivity, type = View.OnClickListener.class)
+    private void btnOpenThirActivity(View view){
+        try {
+            LogUtil.i("startting new activity");
+            startActivity(new Intent(this, ThirdActivity.class));
+        } catch (Exception e) {
+            Toast.makeText(context, "Err:"+e, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -158,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            LogUtil.i("Settings Clicked");
             return true;
         }
 

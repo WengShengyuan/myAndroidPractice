@@ -93,4 +93,20 @@
         android:layout_alignRight="@+id/btnLoad"
         android:layout_alignEnd="@+id/btnLoad" />
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="打开List"
+        android:id="@+id/btnOpenSecActivity"
+        android:layout_below="@+id/tvResult"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="打开UI"
+        android:id="@+id/btnOpenThirActivity"
+        android:layout_below="@+id/btnOpenSecActivity"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
